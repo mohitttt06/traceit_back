@@ -7,3 +7,4 @@ imagehash
 Pillow
 requests
 PyJWT
+gunicorn

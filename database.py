@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
-from database import get_db, init_db, get_cursor, hash_password, verify_password
 from hasher import generate_hash
 import os
 import uuid

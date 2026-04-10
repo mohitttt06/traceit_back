@@ -14,7 +14,7 @@ def scan_all_registered():
     cursor = get_cursor(conn)
 
     # NEWEST FIRST (priority scan)
-    cursor.execute("SELECT * FROM registered_content ORDER BY uploaded_at DESC")
+    cursor.execute("SELECT * FROM registered_content ORDER BY created_at DESC")
     all_content = cursor.fetchall()
 
     cursor.close()

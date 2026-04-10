@@ -8,7 +8,7 @@ if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL environment variable is not set!")
 
 def get_db():
-    conn = psycopg2.connect(DATABASE_URL) # ✅ SSL required for Render
+    conn = psycopg2.connect(DATABASE_URL, sslmode='disable')
     return conn
 
 def get_cursor(conn):

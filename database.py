@@ -4,6 +4,8 @@ import psycopg2.extras
 import bcrypt
 
 DATABASE_URL = os.getenv("postgresql://traceit_db_user:9J6ufWcbG7GHqHyP6tN5wdXkZ4HNHChM@dpg-d7brukedqaus73fouebg-a.oregon-postgres.render.com/traceit_db")
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL environment variable is not set!")
 
 def get_db():
     conn = psycopg2.connect(DATABASE_URL)

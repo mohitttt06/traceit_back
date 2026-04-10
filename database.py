@@ -3,7 +3,7 @@ import psycopg2
 import psycopg2.extras
 import bcrypt
 
-DATABASE_URL = os.getenv("DATABASE_URL")  # ✅ just the variable NAME
+DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL environment variable is not set!")
 
@@ -44,14 +44,20 @@ def init_db():
         CREATE TABLE IF NOT EXISTS flagged_content (
             id SERIAL PRIMARY KEY,
             user_id INTEGER REFERENCES users(id),
+            registered_id INTEGER,
+            content_name TEXT,
+            platform TEXT,
             source_url TEXT,
+            post_title TEXT,
             matched_filename TEXT,
             phash TEXT,
+            match_score INTEGER,
+            detection_method TEXT,
+            status TEXT DEFAULT 'Pending',
             flagged_at TIMESTAMP DEFAULT NOW()
         )
     """)
     conn.commit()
     cursor.close()
     conn.close()
-
-init_db()
+# ✅ NOT called here — app.py handles it safely

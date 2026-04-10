@@ -3,12 +3,12 @@ import psycopg2
 import psycopg2.extras
 import bcrypt
 
-DATABASE_URL = os.getenv("postgresql://traceit_db_user:9J6ufWcbG7GHqHyP6tN5wdXkZ4HNHChM@dpg-d7brukedqaus73fouebg-a.oregon-postgres.render.com/traceit_db")
+DATABASE_URL = os.getenv("DATABASE_URL")  # ✅ just the variable NAME
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL environment variable is not set!")
 
 def get_db():
-    conn = psycopg2.connect(DATABASE_URL)
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')  # ✅ SSL required for Render
     return conn
 
 def get_cursor(conn):
@@ -54,4 +54,4 @@ def init_db():
     cursor.close()
     conn.close()
 
-init_db()  # ✅ called AFTER it's defined
+init_db()

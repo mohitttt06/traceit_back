@@ -16,8 +16,7 @@ CORS(app)
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# ✅ INIT DB (VERY IMPORTANT)
-init_db()
+
 
 JWT_SECRET = os.getenv("JWT_SECRET", "secret")
 

@@ -4,11 +4,15 @@ import psycopg2.extras
 import bcrypt
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL environment variable is not set!")
 
 def get_db():
-    conn = psycopg2.connect(DATABASE_URL, sslmode='disable')
+    if not DATABASE_URL:
+        raise RuntimeError("DATABASE_URL environment variable is not set!")
+    # Fix sslmode based on URL type
+    if "localhost" in DATABASE_URL or "127.0.0.1" in DATABASE_URL:
+        conn = psycopg2.connect(DATABASE_URL)
+    else:
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     return conn
 
 def get_cursor(conn):
@@ -60,4 +64,3 @@ def init_db():
     conn.commit()
     cursor.close()
     conn.close()
-# ✅ NOT called here — app.py handles it safely

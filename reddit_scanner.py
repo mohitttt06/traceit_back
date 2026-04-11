@@ -23,7 +23,7 @@ def scan_reddit(registered_hash, content_name=""):
         print(f"Scanning r/{subreddit}...")
 
         try:
-            url = f"https://www.reddit.com/r/{subreddit}/new.json?limit=50"
+            url = f"https://www.reddit.com/r/{subreddit}/new.json?limit=10"
             response = requests.get(url, headers=HEADERS, timeout=10)
 
             if response.status_code != 200:

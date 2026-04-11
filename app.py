@@ -182,6 +182,15 @@ def bulk_delete_registered():
     conn.close()
     return jsonify({"message": f"{len(ids)} fingerprints deleted"})
 
+@app.route("/api/scan", methods=["POST"])
+def trigger_scan():
+    from scheduler import scan_all_registered
+    try:
+        scan_all_registered()
+        return jsonify({"message": "Scan completed"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)

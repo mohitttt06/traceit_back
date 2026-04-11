@@ -12,6 +12,9 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
+@app.route("/")
+def index():
+    return jsonify({"status": "ok"}), 200
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)

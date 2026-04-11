@@ -158,6 +158,30 @@ def get_users():
     conn.close()
     return jsonify(data)
 
+@app.route("/api/registered/bulk-delete", methods=["DELETE"])
+def bulk_delete_registered():
+    user_id = get_current_user(request)
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+    data = request.get_json()
+    ids = data.get("ids", [])
+    if not ids:
+        return jsonify({"error": "No ids provided"}), 400
+    conn = get_db()
+    cursor = get_cursor(conn)
+    cursor.execute(
+        "DELETE FROM flagged_content WHERE registered_id = ANY(%s::int[]) AND user_id = %s",
+        (ids, user_id)
+    )
+    cursor.execute(
+        "DELETE FROM registered_content WHERE id = ANY(%s::int[]) AND user_id = %s",
+        (ids, user_id)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return jsonify({"message": f"{len(ids)} fingerprints deleted"})
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)

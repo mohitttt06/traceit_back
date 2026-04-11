@@ -9,9 +9,7 @@ HEADERS = {
 SUBREDDITS = [
     "CricketControversial",
     "ipl",
-    "IndianSports",
     "IndiaCricket",
-    "MumbaiIndians",
 ]
 
 def scan_reddit(registered_hash, content_name=""):

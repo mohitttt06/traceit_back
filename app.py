@@ -11,7 +11,11 @@ import datetime
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, 
+     resources={r"/*": {"origins": "*"}},
+     allow_headers=["Authorization", "Content-Type"],
+     methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+     supports_credentials=False)
 @app.route("/")
 def index():
     return jsonify({"status": "ok"}), 200

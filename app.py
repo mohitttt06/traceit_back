@@ -182,7 +182,7 @@ def bulk_delete_registered():
     conn.close()
     return jsonify({"message": f"{len(ids)} fingerprints deleted"})
 
-@app.route("/api/scan", methods=["POST"])
+@app.route("/api/scan", methods=["GET", "POST"])
 def trigger_scan():
     from scheduler import scan_all_registered
     try:

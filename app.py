@@ -143,6 +143,17 @@ def stats():
     conn.close()
     return jsonify({"registered": registered, "flagged": flagged})
 
+
+@app.route("/admin/users", methods=["GET"])
+def get_users():
+    conn = get_db()
+    cursor = get_cursor(conn)
+    cursor.execute("SELECT id, email FROM users")
+    data = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(data)
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
